@@ -16,7 +16,7 @@ mounts:
     parent: chassis_link
     xyz: [0.0, 0.0, 0.205]
     rpy: [0, 0, 0]
-    accepts: [lidar, camera, arm]
+    accepts: [lidar, camera, arm, payload]
   top_tool:
     parent: "@top:tip"
     xyz: [0, 0, 0]

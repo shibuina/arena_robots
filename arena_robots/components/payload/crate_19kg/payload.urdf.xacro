@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- mass-only dead load, box sized inside the jackal chassis top footprint -->
+  <xacro:include filename="$(find arena_robots)/components/utils/inertia.urdf.xacro" />
+
+  <xacro:property name="crate_mass" value="19.3" />
+  <xacro:property name="crate_size_x" value="0.28" />
+  <xacro:property name="crate_size_y" value="0.28" />
+  <xacro:property name="crate_size_z" value="0.25" />
+
+  <xacro:macro name="payload_crate_mount" params="parent_link *origin frame:=payload_link joint_name:=payload_joint">
+    <link name="${frame}">
+      <visual>
+        <origin xyz="0 0 ${crate_size_z/2}" rpy="0 0 0"/>
+        <geometry>
+          <box size="${crate_size_x} ${crate_size_y} ${crate_size_z}"/>
+        </geometry>
+        <material name="crate_yellow">
+          <color rgba="0.8 0.6 0.1 1.0"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 ${crate_size_z/2}" rpy="0 0 0"/>
+        <geometry>
+          <box size="${crate_size_x} ${crate_size_y} ${crate_size_z}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0 ${crate_size_z/2}" rpy="0 0 0"/>
+        <mass value="${crate_mass}"/>
+        <xacro:solid_cuboid_inertia m="${crate_mass}" w="${crate_size_x}" h="${crate_size_y}" d="${crate_size_z}"/>
+      </inertial>
+    </link>
+
+    <joint name="${joint_name}" type="fixed">
+      <xacro:insert_block name="origin"/>
+      <parent link="${parent_link}"/>
+      <child link="${frame}"/>
+    </joint>
+
+    <gazebo reference="${frame}">
+      <material>Gazebo/Yellow</material>
+    </gazebo>
+  </xacro:macro>
+</robot>

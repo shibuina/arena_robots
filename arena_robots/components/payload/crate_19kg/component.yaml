@@ -1,0 +1,13 @@
+# mass-only dead load: one box link, no sensors, actuators or power draw
+xacro:
+  include: "$(find arena_robots)/components/payload/crate_19kg/payload.urdf.xacro"
+  macro: payload_crate_mount
+  attach:
+    parent_link: "${prefix}${parent}"
+    frame: "${prefix}${mount}_payload_link"
+    joint_name: "${mount}_payload_joint"
+  args: {}
+power:
+  static_power_w: 0.0
+mass:
+  kg: 19.3
